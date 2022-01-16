@@ -33,9 +33,25 @@ const server = http.createServer((req, res) => {
     else if(url === '/') {
         res.write('<html>');
         res.write('<head><title>Form</title></head>');
-        res.write('<body><form action="/message" method="POST"><input type="text" name="input_message" placeholder="enter message"><input type="submit" innerText="Message" value="message" name="message"></form></body>');
-        res.write('</html>');
-        return res.end();
+        res.write('<body>');
+        
+        //reading text from the file to print above the "Form"
+        if(fs.existsSync('message.txt')) {
+            fs.readFile('message.txt', 'utf-8', (err, data) => {
+                console.log(data);
+                res.write(`<h3>${data}</h3>`);
+                res.write('<form action="/message" method="POST"><input type="text" name="input_message" placeholder="enter message"><input type="submit" innerText="Message" value="message" name="message"></form>');
+                res.write('</body>');
+                res.write('</html>');
+                return res.end();
+            });
+        }
+        else {
+            res.write('<form action="/message" method="POST"><input type="text" name="input_message" placeholder="enter message"><input type="submit" innerText="Message" value="message" name="message"></form>');
+            res.write('</body>');
+            res.write('</html>');
+            return res.end();
+        }
     }
 
     //redirecting requests
@@ -62,14 +78,14 @@ const server = http.createServer((req, res) => {
         */
     }
 
-    console.log(`Siddharth Verma`);
-    console.log(req.url, req.method, req.headers);
-    res.write('<html>');
-    res.write('<head><title>My First Page</title></head>');
-    res.write('<body><h1>Hello from my Node.js Server!</h1></body>');
-    res.write('</html>');
-    res.end();
-    //process.exit();
+    // console.log(`Siddharth Verma`);
+    // console.log(req.url, req.method, req.headers);
+    // res.write('<html>');
+    // res.write('<head><title>My First Page</title></head>');
+    // res.write('<body><h1>Hello from my Node.js Server!</h1></body>');
+    // res.write('</html>');
+    // res.end();
+    // //process.exit();
 });
 
 server.listen('4000');
