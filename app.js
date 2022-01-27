@@ -11,7 +11,7 @@ const app = express();
 
 app.use(bodyParser.urlencoded({extended: false})); //helps parse the body of request
 
-app.use('/app-product', (req, res, next) => {
+app.use('/add-product', (req, res, next) => {
     res.send('<form action="/product" method="POST"><input type="text" name="title" placeholder="Title"><input type="text" name="size" placeholder="Size"><button type="submit">Add Product</button></form>');
 });
 
