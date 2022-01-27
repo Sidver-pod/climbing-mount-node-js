@@ -1,6 +1,3 @@
-//importing 'http' core module
-const http = require('http');
-
 //importing 'express'
 const express = require('express');
 
