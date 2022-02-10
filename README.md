@@ -7,4 +7,4 @@ My NodeJS learning repo!
 
 - **Express** `npm install express --save`
 
-- **Body-Parser** `npm install body-parser`
+- **Body-Parser** `npm install body-parser --save`
