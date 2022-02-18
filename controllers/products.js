@@ -21,3 +21,7 @@ exports.getShop = (req, res, next) => {
     });
     res.sendFile(path.join(rootDir, 'views', 'shop.html'));
 };
+
+exports.getCart = (req, res, next) => {
+    res.sendFile(path.join(rootDir, 'views', 'cart.html'));
+};
