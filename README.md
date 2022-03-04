@@ -8,3 +8,5 @@ My NodeJS learning repo!
 - **Express** `npm install express --save`
 
 - **Body-Parser** `npm install body-parser --save`
+
+- **MySQL2** `npm install --save mysql2`
