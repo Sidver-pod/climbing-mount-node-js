@@ -1,41 +1,44 @@
-const fs = require('fs');
-
-const path = require('path');
-
-const rootDir = require('../util/path');
-
-const p = path.join(rootDir, 'data', 'products.json');
-
-const getProductsFromFile = cb => {
-    fs.readFile(p, (err, fileContent) => {
-        if(err) {
-             cb([]);
-        }
-        else {
-            cb(JSON.parse(fileContent));   
-        }
-    });
-};
+const db = require('../util/database');
 
 module.exports = class Product {
-    constructor(t) {
-        this.t = t;
-    }
+  constructor(id, title, imageUrl, description, price) {
+    this.id = id; //'null' should be passed for a new product; when '/admin/edit-product' then pass in 'id'
+    this.title = title;
+    this.imageUrl = imageUrl;
+    this.description = description;
+    this.price = price;
+  }
 
-    save() {
-        getProductsFromFile(products => {
-            products.push(this); //new object data pushed into the array
-            console.log(products);
-            //writing a new file (or) re-writing over previous file
-            fs.writeFile(p, JSON.stringify(products), (err) => {
-                if(err) {
-                    console.log(err);
-                }
-            });
-        });
+  save() {
+    //updating a product
+    if(this.id != null) {
+      return db.execute(
+        'UPDATE products SET title = ?, price = ?, description = ?, imageUrl = ? WHERE products.id = ?',
+        [this.title, this.price, this.description, this.imageUrl, this.id]
+      );
     }
+    //inserting a new product
+    else {
+      return db.execute(
+        'INSERT INTO products (title, price, description, imageUrl) VALUES(?, ?, ?, ?)',
+        [this.title, this.price, this.description, this.imageUrl]
+      );
+    }
+  }
 
-    static fetchAll(cb) {
-        getProductsFromFile(cb);
-    }
+  static fetchAll() {
+    return db.execute('SELECT * FROM products');
+  }
+
+  static findById(id) {
+    return db.execute(
+      'SELECT * FROM products WHERE products.id = ?', [id]
+    );
+  }
+
+  static deleteById(id) {
+    return db.execute(
+      'DELETE FROM products WHERE products.id = ?', [id]
+    );
+  }
 };
