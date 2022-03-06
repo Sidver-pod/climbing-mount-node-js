@@ -1,12 +1,9 @@
-/* code to set up a connection with the SQL database which then gives back a connection object to run queries*/
+const Sequelize = require('sequelize');
 
-const mysql = require('mysql2');
-
-const pool = mysql.createPool({
-    host: 'localhost',
-    user: 'root',
-    database: 'node-complete',
-    password: 'pass_node_complete'
+//database, username, password
+const sequelize = new Sequelize('node-complete', 'root', 'frozenAirM1*', {
+    dialect: 'mysql',
+    host: 'localhost'
 });
 
-module.exports = pool.promise();
+module.exports = sequelize;
