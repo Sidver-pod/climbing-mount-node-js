@@ -10,3 +10,5 @@ My NodeJS learning repo!
 - **Body-Parser** `npm install body-parser --save`
 
 - **MySQL2** `npm install --save mysql2`
+
+- **Sequelize** `npm install --save sequelize`
